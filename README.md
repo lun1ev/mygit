@@ -19,8 +19,8 @@ Oleksandr Izotov
 ## Project Structure
 
 ```
-mygit-project/
-├── mygit/
+mygit/                        # Root project directory
+├── mygit/                    # Main package directory
 │   ├── __init__.py           # Package initialization
 │   ├── __main__.py           # Entry point for python -m mygit
 │   ├── colors.py             # ANSI color codes
@@ -34,38 +34,70 @@ mygit-project/
 │       └── navigation.py     # Directory navigation
 ├── mygit.py                  # Main executable script
 ├── README.md                 # This file
-└── .gitignore               # Git ignore rules
+└── .gitignore                # Git ignore rules
 ```
 
 ## Installation
 
+First, clone or download this repository:
+```bash
+git clone <repository-url>
+cd mygit
+```
+
 ### Option 1: Run directly from project directory
 ```bash
-cd ~/mygit-project
+# Navigate to the project directory
+cd /path/to/mygit
 python3 mygit.py
 ```
 
 ### Option 2: Run as Python module
 ```bash
-cd ~/mygit-project
+cd /path/to/mygit
 python3 -m mygit
 ```
 
-### Option 3: Create an alias (recommended)
-Add to your `~/.bashrc`:
+### Option 3: Create an alias (recommended for convenience)
+Add to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
+
 ```bash
-alias mygit='python3 ~/mygit-project/mygit.py'
+# Replace /path/to/mygit with the actual absolute path to the project
+alias mygit='python3 /path/to/mygit/mygit.py'
 ```
-Then reload:
+
+Then reload your shell configuration:
 ```bash
-source ~/.bashrc
+source ~/.bashrc  # or source ~/.zshrc
 ```
 
 Now you can run `mygit` from anywhere!
 
-### Option 4: Install globally
+### Option 4: Install globally with symbolic link
+This makes the command available system-wide:
+
 ```bash
-sudo ln -s ~/mygit-project/mygit.py /usr/local/bin/mygit
+# First, get the absolute path to mygit.py
+cd /path/to/mygit
+pwd  # This shows the absolute path
+
+# Create symbolic link (replace with your actual path)
+sudo ln -s /absolute/path/to/mygit/mygit.py /usr/local/bin/mygit
+
+# Example: if your project is in /home/username/projects/mygit
+# sudo ln -s /home/username/projects/mygit/mygit.py /usr/local/bin/mygit
+```
+
+**Important**: Use the full absolute path, not `~` (tilde), as it may not expand correctly with `sudo`.
+
+To verify the installation:
+```bash
+mygit --help  # Should show the program
+```
+
+If you need to remove or fix the link:
+```bash
+sudo rm /usr/local/bin/mygit
 ```
 
 ## Usage
@@ -77,11 +109,13 @@ mygit
 ```
 
 ### Quick Links
-The navigation feature includes quick links to:
-- `~/personal` - Personal projects
-- `~/university` - University projects
-- `~/ (Home)` - Home directory
-- `~/Documents` - Documents folder
+The navigation feature includes customizable quick links. You can modify them in `mygit/commands/navigation.py` to match your directory structure. Default examples:
+- Personal projects folder
+- University/work projects folder
+- Home directory
+- Documents folder
+
+To customize, edit the `navigate_directory()` function in `navigation.py`.
 
 ### Example Workflow
 
